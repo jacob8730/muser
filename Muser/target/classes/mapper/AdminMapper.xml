@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.muser.mybatis.mapper.AdminMapper">
+	
+	<insert id="MemberInsert" parameterType="Mu_Goods">
+        INSERT INTO MU_MEMBER
+		VALUES
+		(MT_SEQ.NEXTVAL,#{muId},#{muPw},#{muName},#{muBirth},#{muPhone},#{muAddr1},#{muAddr2},#{muAddr3},#{muEmail},0)
+	</insert>
+	
+	<select id="MemberLogin"  resultType="Mu_Member" >
+	   SELECT MUID,MUPW FROM MU_MEMBER WHERE MUID=#{muId} AND MUPW=#{muPw}
+	</select>
+	
+	<select id="SelectCount" resultType="int" parameterType="hashMap">
+		SELECT count(*) FROM MU_MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="Searchtext !=null and Searchtext !='' ">
+				<if test="Search=='NoSearch'">
+					AND muNo LIKE '%' || #{SEARCHTEXT} || '%'
+				</if>
+				<if test="Search == 'IdSearch'">
+					AND muId LIKE '%' || #{SEARCHTEXT} || '%'
+				</if>
+				<if test="Search == 'NameSearch'">
+					AND muName LIKE '%' || #{SEARCHTEXT} || '%'
+				</if>
+				<if test="Search == 'EmailSearch'">
+					AND muEmail LIKE '%' || #{SEARCHTEXT} || '%'
+				</if>
+			</if>
+		</trim>
+	</select>
+
+	<select id="admin_Member_List" resultType="Mu_Member" parameterType="hashMap">
+		SELECT MUNO,MUID,MUNAME,MUEMAIL FROM (
+			SELECT MT_SEQ,MUNO,MUID,MUNAME,MUEMAIL FROM(
+				SELECT MT_SEQ,MUNO,MUID,MUNAME,MUEMAIL FROM(
+					SELECT ROWNUM AS MT_SEQ,MUNO,MUID,MUNAME,MUEMAIL FROM(
+						SELECT * FROM MU_MEMBER
+		<trim prefix="WHERE" prefixOverrides="AND|OR">
+			<if test="Search == 'NoSearch' and Searchtext !=null and Searchtext !=''">
+				AND muNo LIKE '%' || #{SEARCHTEXT} || '%'
+			</if>
+			<if test="Search == 'IdSearch' and Searchtext !=null and Searchtext !=''">
+				AND muId LIKE '%' || #{SEARCHTEXT} || '%'
+			</if>
+			<if test="Search == 'NameSearch' and Searchtext !=null and Searchtext!=''">
+				AND muName LIKE '%' || #{SEARCHTEXT} || '%'
+			</if>
+			<if test="Search == 'EmailSearch' and Searchtext !=null and Searchtext!=''">
+				AND muEmail LIKE '%' || #{SEARCHTEXT} || '%'
+			</if>
+		</trim>
+		ORDER BY MUNO DESC
+					)
+				)
+			)
+		WHERE MT_SEQ >= ${start-1}	
+		)
+	</select>
+	
+	<delete id="admin_Member_Delete" parameterType="String">
+		DELETE FROM MU_MEMBER
+		WHERE MUID=#{muId}
+	</delete>
+	
+	
+	
+</mapper>
+
+
+
+
+
+
+

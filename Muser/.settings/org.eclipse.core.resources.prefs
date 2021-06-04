@@ -1,0 +1,9 @@
+eclipse.preferences.version=1
+encoding//src/main/java/com/kor/muser/controller/AdminController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/BoardController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/CartController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/HomeController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/MemberController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/ReservationController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/RoomController.java=UTF-8
+encoding//src/main/java/com/kor/muser/controller/ShopController.java=UTF-8

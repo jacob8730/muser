@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.spring.muser.mybatis.mapper.MemberMapper">
+
+	<select id="duplicateCheck" parameterType="String"
+		resultType="Mu_Member">
+		SELECT MUID FROM MU_MEMBER WHERE MUID=#{muId}
+	</select>
+
+	<insert id="MemberInsert" parameterType="Mu_Member">
+		INSERT INTO MU_MEMBER
+		VALUES
+		(MT_SEQ.NEXTVAL,#{muId},#{muPw},#{muName},#{muBirth},#{muPhone},#{muAddr1},#{muAddr2},#{muAddr3},#{muEmail},0)
+	</insert>
+
+	<select id="MemberLogin" resultType="Mu_Member">
+		SELECT MUID,MUPW FROM MU_MEMBER WHERE MUID=#{muId} <!-- AND MUPW=#{muPw} -->
+	</select>	
+
+	<select id="SelectMember" resultType="Mu_Member" parameterType="String">
+		SELECT * FROM MU_MEMBER WHERE MUID=#{muId}
+	</select>
+
+	<select id="MemberView" resultType="Mu_Member" parameterType="String">
+		SELECT MUNAME,MUBIRTH,MUPHONE,MUADDR1,MUADDR2,MUADDR3,MUEMAIL FROM MU_MEMBER WHERE MUID=#{muId}
+	</select>
+
+	<delete id="MemberDelete" parameterType="String">
+		DELETE FROM MU_MEMBER
+		WHERE MUID=#{muId}
+	</delete>
+
+</mapper>
+
+
+
+
+
+
+
